@@ -1,24 +1,25 @@
-/** @typedef {import("./global.d.js").Ship} Props */
+/** @typedef {import("./global.d.js").Ship} ShipProps */
+/** @typedef {import("./global.d.js").Board} BoardProps */
 
 /**
  * This class represent a Ship in the battle.
  */
 export class Ship {
-  /** @type {Props["length"]} */
+  /** @type {ShipProps["length"]} */
   length = 0;
-  /** @type {Props["hits"]} */
+  /** @type {ShipProps["hits"]} */
   hits = 0;
-  /** @type {Props["type"]} */
+  /** @type {ShipProps["type"]} */
   type = "carrier";
-  /** @type {Props["orientation"]} */
+  /** @type {ShipProps["orientation"]} */
   orientation = "landscape";
-  /** @type {Props["start"]} */
+  /** @type {ShipProps["start"]} */
   start = { x: 0, y: 0 };
-  /** @type {Props["end"]} */
+  /** @type {ShipProps["end"]} */
   end = { x: 0, y: 0 };
 
   /**
-   * @param {Props} props - Props.
+   * @param {ShipProps} props - ShipProps.
    */
   constructor(props) {
     const {
@@ -41,5 +42,36 @@ export class Ship {
 
   isSunk() {
     return this.hits === this.length;
+  }
+}
+
+/**
+ * This class represent a Ship in the battle.
+ */
+export class Board {
+  /** @type {BoardProps["grid"]} */
+  grid = [];
+  /** @type {BoardProps["size"]} */
+  size = 8;
+  /** @type {BoardProps["hits"]} */
+  hits = 0;
+  /** @type {BoardProps["misses"]} */
+  misses = 0;
+  /** @type {BoardProps["sunk"]} */
+  sunk = 0;
+  /** @type {BoardProps["score"]} */
+  score = 0;
+
+  /**
+   * @param {BoardProps} props - BoardProps.
+   */
+  constructor(props) {
+    const { grid, size = 8, hits = 0, misses = 0, sunk = 0, score = 0 } = props;
+    this.grid = grid;
+    this.size = size;
+    this.hits = hits;
+    this.misses = misses;
+    this.sunk = sunk;
+    this.score = score;
   }
 }

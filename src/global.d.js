@@ -14,4 +14,23 @@
  * @property {Coords} [end={x: 0, y: 0}] - The ending point of the ship.
  */
 
+/**
+ * @typedef {Object} Cell - This are cell properties.
+ * @property {boolean} [hit=false] - The status of the cell.
+ * @property {Ship | null} [ship=null] - The ship that occupies the cell.
+ * @property {Coords} [coords={x: 0, y: 0}] - The coordinates of the cell.
+ * @property {boolean} [miss=false] - The status of the cell.
+ */
+
+/**
+ * @typedef {Object} Board - This are board properties.
+ * @property {Cell[][]} grid - The grid of the board.
+ * @property {number} size - The size of the board.
+ * @property {number} [hits=0] - The number of hits on the board.
+ * @property {number} [misses=0] - The number of misses on the board.
+ * @property {number} [sunk=0] - The number of sunk ships on the board.
+ * @property {number} [score=0] - The score of the board.
+ *
+ */
+
 export {};
