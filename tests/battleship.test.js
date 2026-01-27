@@ -27,3 +27,17 @@ test("Ship sunk", () => {
   carrier.hit();
   assert.strictEqual(carrier.isSunk(), true);
 });
+
+test("Ship orientation", () => {
+  const carrier = new Ship({
+    length: 5,
+    type: "carrier",
+    orientation: "portrait",
+  });
+  assert.strictEqual(carrier.orientation, "portrait");
+});
+
+test("Ship orientation default", () => {
+  const carrier = new Ship({ length: 5, type: "carrier" });
+  assert.strictEqual(carrier.orientation, "landscape");
+});
