@@ -13,10 +13,8 @@ export class Ship {
   type = "carrier";
   /** @type {ShipProps["orientation"]} */
   orientation = "landscape";
-  /** @type {ShipProps["start"]} */
-  start = { x: 0, y: 0 };
-  /** @type {ShipProps["end"]} */
-  end = { x: 0, y: 0 };
+  /** @type {ShipProps["anchor"]} */
+  anchor = { x: 0, y: 0 };
 
   /**
    * @param {ShipProps} props - ShipProps.
@@ -26,14 +24,12 @@ export class Ship {
       length,
       type,
       orientation = "landscape",
-      start = { x: 0, y: 0 },
-      end = { x: 0, y: 0 },
+      anchor = { x: 0, y: 0 },
     } = props;
     this.length = length;
     this.type = type;
     this.orientation = orientation;
-    this.start = start;
-    this.end = end;
+    this.anchor = anchor;
   }
 
   hit() {
