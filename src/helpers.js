@@ -1,5 +1,6 @@
 /** @typedef {import("./global.d.js").Ship} ShipProps */
 /** @typedef {import("./global.d.js").Board} BoardProps */
+/** @typedef {import("./global.d.js").Cell} Cell */
 
 /**
  * This class represent a Ship in the battle.
@@ -59,15 +60,21 @@ export class Board {
   score = 0;
 
   /**
-   * @param {BoardProps} props - BoardProps.
+   * @param {BoardProps["size"]} size - Size of board.
    */
-  constructor(props) {
-    const { grid, size = 8, hits = 0, misses = 0, sunk = 0, score = 0 } = props;
-    this.grid = grid;
+  constructor(size) {
     this.size = size;
-    this.hits = hits;
-    this.misses = misses;
-    this.sunk = sunk;
-    this.score = score;
+
+    /**@type Cell */
+    const initialGrid = {
+      ship: null,
+      hit: false,
+      coords: { x: 0, y: 0 },
+      miss: false,
+    };
+
+    this.grid = Array.from({ length: size }, () =>
+      new Array(size).fill(initialGrid),
+    );
   }
 }

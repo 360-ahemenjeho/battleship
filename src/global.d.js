@@ -23,7 +23,7 @@
 
 /**
  * @typedef {Object} Board - This are board properties.
- * @property {Cell[][]} grid - The grid of the board.
+ * @property {Cell[][]} [grid=[]] - The grid of the board.
  * @property {number} size - The size of the board.
  * @property {number} [hits=0] - The number of hits on the board.
  * @property {number} [misses=0] - The number of misses on the board.
