@@ -8,7 +8,7 @@
  * @typedef {Object} Ship - This are ship properties.
  * @property {number} length - The size of the ship.
  * @property {"carrier" | "battleship" | "cruiser" | "submarine" | "destroyer"} type - The name label of the Ship
- * @property {"landscape" | "portrait"} [orientation="landscape"] - The orientation of the ship.
+ * @property {"up" | "down" | "left" | "right"} [direction="left"] - The direction of the ship.
  * @property {number} [hits=0] - The number of hits on the ship.
  * @property {Coords} [anchor={x: 0, y: 0}] - The starting point of the ship.
  */

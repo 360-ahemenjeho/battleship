@@ -1,6 +1,14 @@
 /** @typedef {import("./global.d.js").Ship} ShipProps */
 /** @typedef {import("./global.d.js").Board} BoardProps */
-/** @typedef {import("./global.d.js").Cell} Cell */
+/** @typedef {import("./global.d.js").Coords} CoordProps */
+/** @typedef {import("./global.d.js").Cell} CellProps */
+
+const DIRECTION = {
+  right: { x: 1, y: 0 },
+  left: { x: -1, y: 0 },
+  top: { x: 0, y: -1 },
+  bottom: { x: 0, y: 1 },
+};
 
 /**
  * This class represent a Ship in the battle.
@@ -12,8 +20,8 @@ export class Ship {
   hits = 0;
   /** @type {ShipProps["type"]} */
   type = "carrier";
-  /** @type {ShipProps["orientation"]} */
-  orientation = "landscape";
+  /** @type {ShipProps["direction"]} */
+  direction = "left";
   /** @type {ShipProps["anchor"]} */
   anchor = { x: 0, y: 0 };
 
@@ -21,15 +29,10 @@ export class Ship {
    * @param {ShipProps} props - ShipProps.
    */
   constructor(props) {
-    const {
-      length,
-      type,
-      orientation = "landscape",
-      anchor = { x: 0, y: 0 },
-    } = props;
+    const { length, type, direction = "left", anchor = { x: 0, y: 0 } } = props;
     this.length = length;
     this.type = type;
-    this.orientation = orientation;
+    this.direction = direction;
     this.anchor = anchor;
   }
 
@@ -65,16 +68,64 @@ export class Board {
   constructor(size) {
     this.size = size;
 
-    /**@type Cell */
-    const initialGrid = {
-      ship: null,
-      hit: false,
-      coords: { x: 0, y: 0 },
-      miss: false,
-    };
-
-    this.grid = Array.from({ length: size }, () =>
-      new Array(size).fill(initialGrid),
+    this.grid = Array.from({ length: size }, (_, y) =>
+      Array.from({ length: size }, (_, x) => ({
+        ship: null,
+        hit: false,
+        miss: false,
+        coords: { x, y },
+      })),
     );
+  }
+
+  /**
+   *
+   * @param {CoordProps} coords - Coordinates to check.
+   * @returns {boolean} Resolves `true` if is within bounds or `false` otherwise.
+   */
+  isWithinBounds(coords) {
+    const { x, y } = coords;
+    return x >= 0 && y >= 0 && x < this.size && y < this.size;
+  }
+
+  /**
+   * Places a ship on the board
+   * @param {ShipProps} ship - The ship to place
+   * @returns {boolean} True if placement successful, false otherwise
+   */
+  placeShip(ship) {
+    const { x, y } = ship.anchor;
+    const delta = DIRECTION[ship.direction];
+
+    for (let i = 0; i < ship.length; i++) {
+      const posX = x + delta.x * i;
+      const posY = y + delta.y * i;
+
+      if (!this.isWithinBounds({ x: posX, y: posY })) return false;
+      if (this.grid[posY][posX].ship !== null) return false;
+      this.grid[posY][posX] = new Cell(ship);
+    }
+    return true;
+  }
+}
+
+/**
+ * This class represents a Cell on the gameboard.
+ */
+export class Cell {
+  /** @type {boolean} */
+  hit = false;
+  /** @type {ShipProps | null} */
+  ship = null;
+  /** @type {CoordProps} */
+  coords = { x: 0, y: 0 };
+  /** @type {boolean} */
+  miss = false;
+
+  /**
+   * @param {CellProps["ship"]} [ship] - The Ship to place on the Board.
+   */
+  constructor(ship) {
+    this.ship = ship;
   }
 }

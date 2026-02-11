@@ -28,16 +28,16 @@ test("Ship sunk", () => {
   assert.strictEqual(carrier.isSunk(), true);
 });
 
-test("Ship orientation", () => {
+test("Ship direction", () => {
   const carrier = new Ship({
     length: 5,
     type: "carrier",
-    orientation: "portrait",
+    direction: "right",
   });
-  assert.strictEqual(carrier.orientation, "portrait");
+  assert.strictEqual(carrier.direction, "right");
 });
 
-test("Ship orientation default", () => {
+test("Ship direction default", () => {
   const carrier = new Ship({ length: 5, type: "carrier" });
-  assert.strictEqual(carrier.orientation, "landscape");
+  assert.strictEqual(carrier.direction, "left");
 });

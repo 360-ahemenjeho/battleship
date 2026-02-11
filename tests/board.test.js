@@ -1,24 +1,32 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { Board } from "../src/helpers.js";
+import { Board, Ship } from "../src/helpers.js";
 
 test("Board", () => {
   const board = new Board(8);
   assert.strictEqual(board.size, 8);
 });
 
-test("Board grid", () => {
+test("Place ship on the board", () => {
+  const ship = new Ship({
+    direction: "right",
+    anchor: { x: 0, y: 0 },
+    length: 5,
+    type: "cruiser",
+  });
+
   const board = new Board(8);
-  console.log("board grid ", board.grid);
-  assert.deepStrictEqual(
-    board.grid,
-    Array.from({ length: 8 }, () =>
-      new Array(8).fill({
-        ship: null,
-        hit: false,
-        coords: { x: 0, y: 0 },
-        miss: false,
-      }),
-    ),
-  );
+  board.placeShip(ship);
+  const grid = board.grid;
+  console.log("Board Grid");
+  console.log(grid);
+
+  console.log("First grid ");
+  console.log(grid?.[0]?.[1]?.ship?.type);
+
+  assert.deepStrictEqual(grid?.[0]?.[0].ship.type, "cruiser");
+  assert.deepStrictEqual(grid?.[0]?.[1].ship.type, "cruiser");
+  assert.deepStrictEqual(grid?.[0]?.[2].ship.type, "cruiser");
+  assert.deepStrictEqual(grid?.[0]?.[3].ship.type, "cruiser");
+  assert.deepStrictEqual(grid?.[0]?.[4].ship.type, "cruiser");
 });
