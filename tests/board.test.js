@@ -18,15 +18,45 @@ test("Place ship on the board", () => {
   const board = new Board(8);
   board.placeShip(ship);
   const grid = board.grid;
-  console.log("Board Grid");
-  console.log(grid);
-
-  console.log("First grid ");
-  console.log(grid?.[0]?.[1]?.ship?.type);
 
   assert.deepStrictEqual(grid?.[0]?.[0].ship.type, "cruiser");
   assert.deepStrictEqual(grid?.[0]?.[1].ship.type, "cruiser");
   assert.deepStrictEqual(grid?.[0]?.[2].ship.type, "cruiser");
   assert.deepStrictEqual(grid?.[0]?.[3].ship.type, "cruiser");
   assert.deepStrictEqual(grid?.[0]?.[4].ship.type, "cruiser");
+});
+
+test("Attack a cell: successful attack", () => {
+  const ship = new Ship({
+    direction: "right",
+    anchor: { x: 0, y: 0 },
+    length: 5,
+    type: "cruiser",
+  });
+
+  const board = new Board(8);
+  board.placeShip(ship);
+  board.attack({ x: 0, y: 0 });
+
+  const grid = board.grid;
+  assert.strictEqual(grid?.[0]?.[0].hit, true);
+  assert.strictEqual(grid?.[0]?.[0].miss, false);
+  assert.strictEqual(grid?.[0]?.[0].ship.hits, 1);
+});
+
+test("Attack a cell: unsuccessful attack", () => {
+  const ship = new Ship({
+    direction: "right",
+    anchor: { x: 0, y: 0 },
+    length: 5,
+    type: "cruiser",
+  });
+
+  const board = new Board(8);
+  board.placeShip(ship);
+  board.attack({ x: 0, y: 1 });
+
+  const grid = board.grid;
+  assert.strictEqual(grid?.[1]?.[0].hit, false);
+  assert.strictEqual(grid?.[1]?.[0].miss, true);
 });

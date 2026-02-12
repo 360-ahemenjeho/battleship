@@ -107,6 +107,25 @@ export class Board {
     }
     return true;
   }
+
+  /**
+   * Places a ship on the board
+   * @param {CoordProps} coords - The ship to place
+   */
+  attack(coords) {
+    const { x, y } = coords;
+    let cell = this.grid[y][x];
+
+    if (!cell.ship) {
+      cell.miss = true;
+      return;
+    }
+
+    if (cell?.ship && !cell.hit && !cell?.ship.isSunk()) {
+      cell.ship.hit();
+      cell.hit = true;
+    }
+  }
 }
 
 /**
