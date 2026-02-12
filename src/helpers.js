@@ -116,6 +116,8 @@ export class Board {
     const { x, y } = coords;
     let cell = this.grid[y][x];
 
+    if (cell.miss) return;
+
     if (!cell.ship) {
       cell.miss = true;
       return;
