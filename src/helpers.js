@@ -2,6 +2,7 @@
 /** @typedef {import("./global.d.js").Board} BoardProps */
 /** @typedef {import("./global.d.js").Coords} CoordProps */
 /** @typedef {import("./global.d.js").Cell} CellProps */
+/** @typedef {import("./global.d.js").Player} PlayerProps */
 
 const DIRECTION = {
   right: { x: 1, y: 0 },
@@ -103,7 +104,7 @@ export class Board {
 
       if (!this.isWithinBounds({ x: posX, y: posY })) return false;
       if (this.grid[posY][posX].ship !== null) return false;
-      this.grid[posY][posX] = new Cell(ship);
+      this.grid[posY][posX] = new Cell(ship, { x: posX, y: posY });
     }
     return true;
   }
@@ -134,19 +135,46 @@ export class Board {
  * This class represents a Cell on the gameboard.
  */
 export class Cell {
-  /** @type {boolean} */
+  /** @type {CellProps["hit"]} */
   hit = false;
-  /** @type {ShipProps | null} */
+  /** @type {CellProps["ship"] | null} */
   ship = null;
-  /** @type {CoordProps} */
+  /** @type {CellProps["coords"]} */
   coords = { x: 0, y: 0 };
-  /** @type {boolean} */
+  /** @type {CellProps["miss"]} */
   miss = false;
 
   /**
    * @param {CellProps["ship"]} [ship] - The Ship to place on the Board.
+   * @param {CellProps["coords"]} [coords] - The coordinates of the cell.
    */
-  constructor(ship) {
+  constructor(ship, coords) {
     this.ship = ship;
+    this.coords = coords;
+  }
+}
+
+/**
+ * This is the class that represents a player.
+ */
+export class Player {
+  /** @type {PlayerProps["type"]} */
+  type = "real";
+  /** @type {PlayerProps["name"]} */
+  name = "Player";
+  /** @type {PlayerProps["ships"]} */
+  ships = [];
+  /** @type {PlayerProps["board"]} */
+  board = null;
+
+  /**
+   * @param {PlayerProps} props - Player Props.
+   */
+  constructor(props) {
+    const { type, ships, name, board } = props;
+    this.type = type;
+    this.name = name;
+    this.ships = ships;
+    this.board = board;
   }
 }

@@ -39,5 +39,7 @@ test("Ship direction", () => {
 
 test("Ship direction default", () => {
   const carrier = new Ship({ length: 5, type: "carrier" });
+  console.log("Carrier details");
+  console.log(carrier);
   assert.strictEqual(carrier.direction, "left");
 });

@@ -12,7 +12,7 @@
  * @property {number} [hits=0] - The number of hits on the ship.
  * @property {Coords} [anchor={x: 0, y: 0}] - The starting point of the ship.
  * @property {() => void} [hit] - Increase the hit count of ship.
- * * @property {() => boolean} [isSunk] - Returns `true` if ship is sunk and `false` if otherwise.
+ * @property {() => boolean} [isSunk] - Returns `true` if ship is sunk and `false` if otherwise.
  */
 
 /**
@@ -31,6 +31,14 @@
  * @property {number} [misses=0] - The number of misses on the board.
  * @property {number} [sunk=0] - The number of sunk ships on the board.
  * @property {number} [score=0] - The score of the board.
+ */
+
+/**
+ * @typedef {Object} Player - A game participant.
+ * @property {"real" | "computer"} [type="real"] - This is the type of player.
+ * @property {string} [name="Player"] - The name of the player.
+ * @property {Ship[]} ships - The ships that the player own.
+ * @property {Board | null} board - The board tied to the player.
  */
 
 export {};
